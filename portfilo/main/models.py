@@ -12,3 +12,16 @@ class Contact(models.Model):
     message=models.TextField(max_length=255)
     def __str__(self):
         return self.name+str(self.date)
+    
+
+
+class Projects(models.Model):
+     name =models.CharField(max_length=50)
+     project_url=models.URLField(null=True)
+     date = models.DateTimeField(auto_now_add=True)
+
+
+
+     def __str__(self):
+        return self.name+str(self.date)
+
