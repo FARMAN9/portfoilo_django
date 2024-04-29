@@ -260,4 +260,24 @@
    */
   new PureCounter();
 
+
 })()
+
+function validateForm() {
+  // Assume form is valid initially
+  let isValid = true;
+  
+  // Perform form validation checks here (e.g., check if inputs are empty)
+  // If there is a validation error:
+  isValid = false; // Set isValid to false
+  
+  if (!isValid) {
+      // Display error message
+      document.querySelector('.contact .php-email-form .error-message').style.display = 'block';
+  } else {
+      // Hide error message
+      document.querySelector('.contact .php-email-form .error-message').style.display = 'none';
+  }
+  
+  return isValid;
+}
