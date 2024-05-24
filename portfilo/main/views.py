@@ -6,8 +6,17 @@ from .models import*
 from django.urls import reverse
 
 # Create your views here.
-
+from datetime import date
+ 
+def calculateAge(birthDate):
+    today = date.today()
+    age = today.year - birthDate.year -((today.month, today.day) < (birthDate.month, birthDate.day))
+    return age
 class index(TemplateView):
+    main_data = mainx.objects.get(id=1)
+    skills=skills.objects.all().values()
+    portfolios=Projects.objects.all().values()
+    print("------------------------>",main_data.about)
     template_name='index.html'
     def  get_context_data(self,**kwargs):
         context=super().get_context_data(**kwargs)
@@ -16,6 +25,10 @@ class index(TemplateView):
         context['Email'] ='saeedfarman9@gmail.com'
         context['address'] ='Pulwama J&K India'
         context['form'] = ContactForm()
+        context['main']=self.main_data
+        context['skill_list']=self.skills
+        context['age']=calculateAge(date(1998, 9, 15))
+        context['portfolio_list']=self.portfolios
         return context
     def post(self, request, *args, **kwargs):
         # Handle form submission
@@ -32,6 +45,36 @@ class index(TemplateView):
             return redirect(reverse('datanotsend')) 
            
    
+
+
+class ProjectView(TemplateView):
+    template_name = 'portfolio-details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project_id = kwargs.get('id')  # Retrieve the id parameter from URL
+        data = Projects.objects.get(id=project_id)
+        context['Name'] = 'Syed Farman ali'
+        context['Phone'] = '+91 6005943382'
+        context['Email'] = 'saeedfarman9@gmail.com'
+        context['address'] = 'Pulwama J&K India'
+        context['data'] = data
+        return context
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 from django.http import HttpResponse
 
@@ -59,8 +102,6 @@ def DataNotsend(request):
 
 
 class projects():
-
-
 
     def  get_context_data(self,**kwargs):
         context=super().get_context_data(**kwargs)

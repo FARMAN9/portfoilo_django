@@ -2,8 +2,17 @@ from django.contrib import admin
 from main.models import *
 
 # Register your models here.
+admin.site.register(mainx)
 admin.site.register(Contact)
 admin.site.register(Projects)
+admin.site.register(Eduction)
+admin.site.register(summery)
+admin.site.register(Professional_Experience)
+admin.site.register(skills)
+
+
+
+
 class ContactAdmin(admin.ModelAdmin):
     # Customize the list display
     list_display = ('name', 'email', 'created_at')

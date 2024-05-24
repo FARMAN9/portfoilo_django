@@ -7,6 +7,7 @@ urlpatterns=[
     path('', views.index.as_view(), name='index'),
     path('datasend/',views.Datasend,name='datasend'),
      path('datanotsend/',views.Datasend,name='datanotsend'),
+     path('Project/<int:id>/',views.ProjectView.as_view(),name='project')
    
 
 
