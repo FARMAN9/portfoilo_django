@@ -12,23 +12,30 @@ def calculateAge(birthDate):
     today = date.today()
     age = today.year - birthDate.year -((today.month, today.day) < (birthDate.month, birthDate.day))
     return age
+
 class index(TemplateView):
-    main_data = mainx.objects.get(id=1)
-    skills=skills.objects.all().values()
-    portfolios=Projects.objects.all().values()
-    print("------------------------>",main_data.about)
+    main_data = 'jjj'#Smainx.objects.get(id=1)
+    skills=skills.objects.all()
+    portfolios=Projects.objects.all()
+    eduction=Eduction.objects.all()
+    Professionals=Professional_Experience.objects.all()
+    sumary= 1#summery.objects.get(id=1)
     template_name='index.html'
     def  get_context_data(self,**kwargs):
         context=super().get_context_data(**kwargs)
-        context['Name'] ='Syed Farman ali'
+        context['Name'] ='Syed Farman Ali'
         context['Phone'] ='+91 6005943382'
         context['Email'] ='saeedfarman9@gmail.com'
         context['address'] ='Pulwama J&K India'
         context['form'] = ContactForm()
         context['main']=self.main_data
-        context['skill_list']=self.skills
+        context['skill_list']=self.skills.all()
         context['age']=calculateAge(date(1998, 9, 15))
-        context['portfolio_list']=self.portfolios
+        context['portfolio_list']=self.portfolios.all()
+        context['eductions']=self.eduction.all()
+        context['Professionals']=self.Professionals.all()
+        context['sumary']=self.sumary
+      
         return context
     def post(self, request, *args, **kwargs):
         # Handle form submission

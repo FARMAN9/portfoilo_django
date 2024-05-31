@@ -2,7 +2,7 @@ from django.contrib import admin
 from main.models import *
 
 # Register your models here.
-admin.site.register(mainx)
+#admin.site.register(Smainx)
 admin.site.register(Contact)
 admin.site.register(Projects)
 admin.site.register(Eduction)

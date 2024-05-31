@@ -19,7 +19,9 @@ class Projects(models.Model):
      name =models.CharField(max_length=50)
      project_url=models.URLField(null=True)
      date = models.DateTimeField(auto_now_add=True)
-     image = models.ImageField(upload_to='images/')
+     image1 = models.ImageField(upload_to='images/')
+     image2 = models.ImageField(upload_to='images/',null=True)
+     image3 = models.ImageField(upload_to='images/',null=True)
      def __str__(self):
         return self.name+str(self.date)
 class Eduction (models.Model):
@@ -30,7 +32,11 @@ class Eduction (models.Model):
      about=models.CharField(max_length=255)
      def __str__(self):
         return self.name
-class Professional_Experience(Eduction):
+class Professional_Experience(models.Model):
+      name =models.CharField(max_length=100)
+      frm = models.CharField(max_length=100)
+      to = models.CharField(max_length=100)
+      address=models.CharField(max_length=100)
       p1= models.CharField(max_length=255)
       p2= models.CharField(max_length=255) 
       p3= models.CharField(max_length=255) 
@@ -52,12 +58,15 @@ class summery (models.Model):
      
      
         
-    
+
 class mainx(models.Model):
     about= models.CharField(max_length=100) 
     cantact= models.CharField(max_length=100)
     portfilo= models.CharField(max_length=100) 
     resume= models.CharField(max_length=100)
     Skills=models.CharField(max_length=100)
-    
+    def __str__(self):
+        return self.about
+
+
 
