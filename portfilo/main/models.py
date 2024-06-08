@@ -18,16 +18,18 @@ class Contact(models.Model):
 class Projects(models.Model):
      name =models.CharField(max_length=50)
      project_url=models.URLField(null=True)
+     client=models.CharField(max_length=50,null=True, blank=True)
+     description=models.TextField(max_length=255,null=True, blank=True)
      date = models.DateTimeField(auto_now_add=True)
      image1 = models.ImageField(upload_to='images/')
-     image2 = models.ImageField(upload_to='images/',null=True)
-     image3 = models.ImageField(upload_to='images/',null=True)
+     image2 = models.ImageField(upload_to='images/',null=True,blank=True)
+     image3 = models.ImageField(upload_to='images/',null=True,blank=True)
      def __str__(self):
         return self.name+str(self.date)
 class Eduction (models.Model):
      name =models.CharField(max_length=100)
      frm = models.CharField(max_length=100)
-     to = models.CharField(max_length=100)
+     to = models.CharField(max_length=100,default='Present')
      address=models.CharField(max_length=100)
      about=models.CharField(max_length=255)
      def __str__(self):
@@ -35,7 +37,7 @@ class Eduction (models.Model):
 class Professional_Experience(models.Model):
       name =models.CharField(max_length=100)
       frm = models.CharField(max_length=100)
-      to = models.CharField(max_length=100)
+      to = models.CharField(max_length=100,default='present')
       address=models.CharField(max_length=100)
       p1= models.CharField(max_length=255)
       p2= models.CharField(max_length=255) 
@@ -60,13 +62,26 @@ class summery (models.Model):
         
 
 class mainx(models.Model):
-    about= models.CharField(max_length=100) 
-    cantact= models.CharField(max_length=100)
-    portfilo= models.CharField(max_length=100) 
-    resume= models.CharField(max_length=100)
-    Skills=models.CharField(max_length=100)
+    about= models.CharField(max_length=100,default=' ',null= True) 
+    cantact= models.CharField(max_length=100,default=' ',null= True)
+    portfilo= models.CharField(max_length=100,default=' ',null= True) 
+    resume= models.CharField(max_length=100,default=' ',null= True)
+    Skills=models.CharField(max_length=100,default=' ',null= True)
+    certificates=models.CharField(max_length=100,default=' ',null= True)
+    profile=models.ImageField(upload_to='images/')
+    iam1=models.CharField(max_length=100,default='Developer',null= True) 
+    iam2=models.CharField(max_length=100,default='Developer',null= True) 
+    iam3=models.CharField(max_length=100,default='Developer',null= True) 
+    iam4=models.CharField(max_length=100,default='Developer',null= True)
+    
     def __str__(self):
         return self.about
-
+    
+class  certificates(models.Model):
+    name=models.CharField(max_length=100,null= True)  
+    link=models.URLField(null=True)
+    image1 = models.ImageField(upload_to='images/')
+    def __str__(self):
+        return self.name
 
 

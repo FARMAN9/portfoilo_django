@@ -2,13 +2,14 @@ from django.contrib import admin
 from main.models import *
 
 # Register your models here.
-#admin.site.register(Smainx)
+admin.site.register(mainx)
 admin.site.register(Contact)
 admin.site.register(Projects)
 admin.site.register(Eduction)
 admin.site.register(summery)
 admin.site.register(Professional_Experience)
 admin.site.register(skills)
+admin.site.register(certificates)
 
 
 

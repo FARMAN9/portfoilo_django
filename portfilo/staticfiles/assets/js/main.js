@@ -262,22 +262,92 @@
 
 
 })()
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.php-email-form').forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
 
-function validateForm() {
-  // Assume form is valid initially
-  let isValid = true;
-  
-  // Perform form validation checks here (e.g., check if inputs are empty)
-  // If there is a validation error:
-  isValid = false; // Set isValid to false
-  
-  if (!isValid) {
-      // Display error message
-      document.querySelector('.contact .php-email-form .error-message').style.display = 'block';
-  } else {
-      // Hide error message
-      document.querySelector('.contact .php-email-form .error-message').style.display = 'none';
+      let isValid = validateForm(this);
+      if (isValid) {
+        submitForm(this);
+      }
+    });
+  });
+
+  function validateForm(form) {
+    let isValid = true;
+    // Example validation: Check if required fields are filled
+    form.querySelectorAll('[required]').forEach(function (input) {
+      if (!input.value.trim()) {
+        isValid = false;
+      }
+    });
+
+    if (!isValid) {
+      form.querySelector('.error-message').style.display = 'block';
+    } else {
+      form.querySelector('.error-message').style.display = 'none';
+    }
+
+    return isValid;
   }
-  
-  return isValid;
-}
+
+  function submitForm(form) {
+    let action = form.getAttribute('action');
+    let formData = new FormData(form);
+
+    form.querySelector('.loading').style.display = 'block';
+    form.querySelector('.error-message').style.display = 'none';
+    form.querySelector('.sent-message').style.display = 'none';
+
+    // Get CSRF token from cookies
+    let csrfToken = getCookie('csrftoken');
+
+    fetch(action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRFToken': csrfToken
+      }
+    })
+    .then(response => {
+      form.querySelector('.loading').style.display = 'none';
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(`${response.status} ${response.statusText} ${response.url}`);
+      }
+    })
+    .then(data => {
+      if (data.status === 'OK') {
+        form.querySelector('.sent-message').style.display = 'block';
+        form.reset();
+      } else {
+        let errorMessage = form.querySelector('.error-message');
+        errorMessage.style.display = 'block';
+        errorMessage.innerHTML = data.errors ? JSON.stringify(data.errors) : 'Form submission failed.';
+      }
+    })
+    .catch((error) => {
+      let errorMessage = form.querySelector('.error-message');
+      errorMessage.style.display = 'block';
+      errorMessage.innerText = error;
+    });
+  }
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+});

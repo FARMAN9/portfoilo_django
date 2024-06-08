@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic import View,TemplateView,CreateView,FormView
 from .forms import *
 from django.contrib import messages
+from django.http import JsonResponse
 from .models import*
 from django.urls import reverse
 
@@ -14,12 +15,31 @@ def calculateAge(birthDate):
     return age
 
 class index(TemplateView):
-    main_data = 'jjj'#Smainx.objects.get(id=1)
+    
+    try:
+        if mainx:
+            main_data = mainx.objects.get(id=1)
+        else:
+            main_data = 'nodata'    
+    except mainx.DoesNotExist:
+            main_data = 'nodata'
+
+        # Attempt to get summery object or set to 'nodata'
+    try:
+        if summery:
+            sumary =summery.objects.get(id=1)
+        else:
+            sumary = 'nodata'          
+    except summery.DoesNotExist:
+            sumary = 'nodata' 
+   
+    
     skills=skills.objects.all()
     portfolios=Projects.objects.all()
     eduction=Eduction.objects.all()
     Professionals=Professional_Experience.objects.all()
-    sumary= 1#summery.objects.get(id=1)
+    certificate=certificates.objects.all()
+   
     template_name='index.html'
     def  get_context_data(self,**kwargs):
         context=super().get_context_data(**kwargs)
@@ -34,6 +54,7 @@ class index(TemplateView):
         context['portfolio_list']=self.portfolios.all()
         context['eductions']=self.eduction.all()
         context['Professionals']=self.Professionals.all()
+        context['certificates_list']=self.certificate.all()
         context['sumary']=self.sumary
       
         return context
@@ -45,18 +66,25 @@ class index(TemplateView):
             form.save()
             messages.success(request, "Your message has been sent successfully!")
             # Redirect to a success URL or reload the page
-            return redirect(reverse('datasend')) 
+            return JsonResponse({'status': 'OK'})
         else:
             # If the form is invalid, render the page with the form and errors
             messages.error(request, "There was an error submitting the form.")
-            return redirect(reverse('datanotsend')) 
-           
+            errors='Invalid'
+            return JsonResponse({'status': 'FAIL', 'errors': errors })
    
-
 
 class ProjectView(TemplateView):
     template_name = 'portfolio-details.html'
-
+    
+    try:   
+        if mainx :
+            main_data = mainx.objects.get(id=1)
+        else:
+            main_data = 'nodata'    
+    except mainx.DoesNotExist:
+            main_data = 'nodata'
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         project_id = kwargs.get('id')  # Retrieve the id parameter from URL
@@ -66,21 +94,8 @@ class ProjectView(TemplateView):
         context['Email'] = 'saeedfarman9@gmail.com'
         context['address'] = 'Pulwama J&K India'
         context['data'] = data
+        context['main']=self.main_data
         return context
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 from django.http import HttpResponse
@@ -94,19 +109,6 @@ def DataNotsend(request):
     # Check request.method if needed to handle different HTTP methods
     # For now, let's assume we just want to return a simple text response.
     return HttpResponse("Invalid")
-
-
-
-
-
-   
-          
-
-
-        
-    
-
-
 
 class projects():
 
