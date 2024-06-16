@@ -16,24 +16,11 @@ def calculateAge(birthDate):
 
 class index(TemplateView):
     
-    try:
-        if mainx:
-            main_data = mainx.objects.get(id=1)
-        else:
-            main_data = 'nodata'    
-    except mainx.DoesNotExist:
-            main_data = 'nodata'
-
-        # Attempt to get summery object or set to 'nodata'
-    try:
-        if summery:
-            sumary =summery.objects.get(id=1)
-        else:
-            sumary = 'nodata'          
-    except summery.DoesNotExist:
-            sumary = 'nodata' 
    
-    
+
+   
+    main_data=mainx.objects.all()
+    sumary=summery.objects.all()
     skills=skills.objects.all()
     portfolios=Projects.objects.all()
     eduction=Eduction.objects.all()
@@ -48,14 +35,14 @@ class index(TemplateView):
         context['Email'] ='saeedfarman9@gmail.com'
         context['address'] ='Pulwama J&K India'
         context['form'] = ContactForm()
-        context['main']=self.main_data
+        context['main']=self.main_data.all()
         context['skill_list']=self.skills.all()
         context['age']=calculateAge(date(1998, 9, 15))
         context['portfolio_list']=self.portfolios.all()
         context['eductions']=self.eduction.all()
         context['Professionals']=self.Professionals.all()
         context['certificates_list']=self.certificate.all()
-        context['sumary']=self.sumary
+        context['sumary']=self.sumary.all
       
         return context
     def post(self, request, *args, **kwargs):
