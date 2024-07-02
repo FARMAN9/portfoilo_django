@@ -19,4 +19,14 @@ To run this project locally, make sure you have Python and Django installed.
    ```bash
    git clone https://github.com/FARMAN9/portfoilo_django.git
 
-   
+2.cd portfolio
+3.python -m venv venv
+4.venv\Scripts\activate or source venv/bin/activate
+5.pip install -r requirements.txt
+6.python manage.py migrate
+7.python manage.py createsuperuser
+8.python manage.py runserver
+
+
+
+
