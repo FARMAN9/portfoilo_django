@@ -67,15 +67,15 @@ class index(TemplateView):
 
 class ProjectView(TemplateView):
     template_name = 'portfolio-details.html'
-    ''' 
-    try:   
-        if mainx :
+
+    try:
+        if mainx:
             main_data = mainx.objects.get(id=1)
         else:
-            main_data = 'nodata'    
-    except mainx.DoesNotExist:
             main_data = 'nodata'
-    
+    except mainx.DoesNotExist:
+        main_data = 'nodata'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         project_id = kwargs.get('id')  # Retrieve the id parameter from URL
@@ -85,9 +85,8 @@ class ProjectView(TemplateView):
         context['Email'] = 'saeedfarman9@gmail.com'
         context['address'] = 'Pulwama J&K India'
         context['data'] = data
-        context['main']=self.main_data
+        context['main'] = self.main_data
         return context
-        '''
 
 
 def Datasend(request):
