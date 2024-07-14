@@ -70,13 +70,13 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+  <section id="hero" class="d-flex flex-column justify-content-center align-items-center" style="background-image: url('{{main.0.background.url}}');">
     <div class="hero-container" data-aos="fade-in">
       <h1>{{Name}}</h1>
       <p>I'm <span class="typed" data-typed-items="{{main.0.iam1}},{{main.0.iam2}},{{main.0.iam3}}"></span></p>
     </div>
   </section><!-- End Hero -->
-
+ 
   <main id="main">
 
     <!-- ======= About Section ======= -->
@@ -464,7 +464,7 @@
               <div class="text-center"><button type="submit">Send Message</button></div>
 
               {% if messages %}
-                {% include 'notf.html' %}
+              
               {%endif%}  
             
             </form>
